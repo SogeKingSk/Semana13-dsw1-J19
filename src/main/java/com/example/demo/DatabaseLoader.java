@@ -9,11 +9,15 @@ public class DatabaseLoader implements CommandLineRunner {
 
 	private final InstrumentoRepository repositoryI;
 	private final MusicoRepository repositoryM;
+	private final BandaRepository repositoryB;
+	private final IntegranteRepository repositoryIn;
 
 	@Autowired
-	public DatabaseLoader(InstrumentoRepository repositoryI, MusicoRepository repositoryM) {
+	public DatabaseLoader(InstrumentoRepository repositoryI, MusicoRepository repositoryM,BandaRepository repositoryB,IntegranteRepository repositoryIn) {
 		this.repositoryI = repositoryI;
 		this.repositoryM = repositoryM;
+		this.repositoryB = repositoryB;
+		this.repositoryIn = repositoryIn;
 	}
 
 	@Override
@@ -21,6 +25,23 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.repositoryI.save(new Instrumento("Guitarra", "Cuerda", "de madera, con caja de resonancia, 6 cuerdas templadas"));
 		this.repositoryI.save(new Instrumento("Ukelele","Cuerda","de madera, con caja de resonancia pequeña, 4 cuerdas templadas"));
 		this.repositoryI.save(new Instrumento("Melódica","Viento","teclado pequeño de 2 octavas, sonorizado por soplido"));
+		Instrumento iVoz = new Instrumento("Voz","Viento","El instrumento principal de chip canario");
+		this.repositoryI.save(iVoz);
+		Instrumento iGuitarraElectrica = new Instrumento("Guitarra Electrica","Electronico","de madera, con caja de resonancia, 6 cuerdas templadas");
+		this.repositoryI.save(iGuitarraElectrica);
+		this.repositoryI.save(new Instrumento("Bateria","Percusion","pumpum pum pum pum pumpumpum"));
+
 		this.repositoryM.save(new Musico("Daniel F"));
+		Musico mFreddy = new Musico("Fredy Mercury");
+		this.repositoryM.save(mFreddy);
+		Musico mBryan = new Musico("Bryan May");
+		this.repositoryM.save(mBryan);
+		this.repositoryM.save(new Musico("Bryan F"));
+
+		Banda bQueen = new Banda("Queen");
+		this.repositoryB.save(bQueen);
+		
+		this.repositoryIn.save(new Integrante(bQueen,mFreddy,iVoz));
+		this.repositoryIn.save(new Integrante(bQueen,mBryan,iGuitarraElectrica));
 	}
 }
